@@ -1,14 +1,14 @@
 //Attempting to create functions for 5 different modes, and a choose function to switch between these 5 modes by adding incrementally 
 
-int current_state = 0;
-const int pinLED1 = 13;
-const int pinLED2 = 12;
-const int pinLED3 = 11;
-const int pinButton = 8;
+int current_state = 0; //This variable will be used to toggle through the 5 modes/states
+const int pinLED1 = 13; //Red LED
+const int pinLED2 = 12; //Yellow LED
+const int pinLED3 = 11; //Green LED
+const int pinButton = 8; //Push Button 
 unsigned long lastDebounceTime = 0; //the last time the output pin was toggled 
 unsigned long debounceDelay = 200; // the debounce time, increase if the output flickers 
 
-// the setup function runs once when you press reset or power the board
+// the setup function runs once when you press reset or power the board 
 void setup() {
   // initialize digital pin 13 as an output.
   pinMode(pinLED1, OUTPUT);
@@ -22,7 +22,7 @@ void setup() {
   // initialize button pin as an input 
   pinMode(pinButton, INPUT) 
   
-  //Make it talk to the computer
+  //Make arduino talk to the computer
   Serial.begin(9600);
 }
 
@@ -39,7 +39,7 @@ void loop() {
   // If the switch changed, due to noise or pressing:
   if (reading != lastButtonState) {
     // reset the debouncing timer
-    lastDebounceTime = millis();
+    lastDebounceTime = millis(); //time in milliseconds
   }
 
   if ((millis() - lastDebounceTime) > debounceDelay) {
@@ -48,9 +48,9 @@ void loop() {
 
     // if the button state has changed:
     if (reading != buttonState) {
-      buttonState = reading;
+      buttonState = reading; //creates new current state
 
-      // only toggle the LED if the new button state is HIGH
+      // only toggle LED functions if the new button state is HIGH
       if (buttonState == HIGH) {
         current_state = current_state + 1;
       }
