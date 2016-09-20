@@ -1,4 +1,4 @@
-//Attempting to create functions for 5 different modes, and a choose function to switch between these 5 led modes by adding incrementally 
+
 
 int current_state = 0; //This variable will be used to toggle through the 5 led modes/states
 const int pinLED1 = 13; //Red LED
@@ -13,7 +13,7 @@ unsigned long lastBlinkTime = 0; //last time that the LED blinked or changed sta
 int analogPin = 0; //pin to read distance sensor
 int val_read = 0; //value read from distance sensor
 
-// the setup function runs once when you press reset or power the board 
+
 void setup() {
   // initialize digital pin 13 as an output.
   pinMode(pinLED1, OUTPUT);
@@ -29,7 +29,8 @@ void setup() {
 }
 
 void loop() { 
- 
+
+//This structure chooses what to set current_state based on the value of the distance sensor. Values chosen experimentally. 
   val_read = analogRead(analogPin);
   if (val_read <= 150){
     current_state = 0;
@@ -47,7 +48,7 @@ void loop() {
     current_state = 4;
   }
 
-  //NESTED LED FUNCTIONS HERE
+//Calls LED function based on Current state
   if (current_state == 0){
     AllOff();  
   }
@@ -65,24 +66,25 @@ void loop() {
   }
   
 
-  // save the reading.  Next time through the loop,
+  // save the last state.  Next time through the loop,
   // it'll be the lastButtonState:
   if(lastButtonState != current_state){
     lastDebounceTime = millis();
   }
-  
+  //Update current state 
   lastButtonState = current_state;
+  //
   Serial.println(val_read);
 }
 
 void AllOff() {
+  //Turns all the LEDS off
   digitalWrite(pinLED1, LOW);
   digitalWrite(pinLED2, LOW);
   digitalWrite(pinLED3, LOW);
 }
 void AllFlashing() {
-  
-  
+   //Checks mills and does a mod to see whether in an odd or even time since pattern last changed. If odd, turns off. if even, turns on.
   if ((((millis()-lastDebounceTime)/1000) % 2) == 1  ){
     digitalWrite(pinLED1, HIGH);
     digitalWrite(pinLED2, HIGH);
@@ -97,12 +99,13 @@ void AllFlashing() {
   
 }
 void AllOn() {
+  //Turns all the LEDs on
   digitalWrite(pinLED1, HIGH);
   digitalWrite(pinLED2, HIGH);
   digitalWrite(pinLED3, HIGH); 
 }
 void BlinkInOrder() {
-  
+   //Checks mills and does a mod to see which led should be on.
   if ((((millis()-lastDebounceTime)/1000) % 3) == 0  ){
     digitalWrite(pinLED1, HIGH);
   }
@@ -126,6 +129,7 @@ void BlinkInOrder() {
     
 }
 void BlinkAlternating() {
+  //Checks millis and does a mod. Turns on one LED and then the other two, alternating.
   if ((((millis()-lastDebounceTime)/1000) % 2) == 1  ){
     digitalWrite(pinLED1, HIGH);
     digitalWrite(pinLED2, LOW);

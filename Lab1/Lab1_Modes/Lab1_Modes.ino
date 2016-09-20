@@ -1,4 +1,4 @@
-//Attempting to create functions for 5 different modes, and a choose function to switch between these 5 led modes by adding incrementally 
+we we//Switches between modes on button press
 
 int current_state = 0; //This variable will be used to toggle through the 5 led modes/states
 const int pinLED1 = 13; //Red LED
@@ -11,7 +11,6 @@ int lastButtonState = 0; //last Button State
 int ButtonState = 0; //Button State
 unsigned long lastBlinkTime = 0; //last time that the LED blinked or changed states within an LED control function
 
-// the setup function runs once when you press reset or power the board 
 void setup() {
   // initialize digital pin 13 as an output.
   pinMode(pinLED1, OUTPUT);
@@ -30,7 +29,6 @@ void setup() {
 }
 
 void loop() { 
- //HERE WE WILL CALL ALL 5 FUNCTIONS AND INCREMENTALLY SWITCH BETWEEN USING COUNTER (CHANGE CURRENT STATE)
  
  // read the state of the switch into a local variable:
   int reading = digitalRead(pinButton);
@@ -65,7 +63,7 @@ void loop() {
     }
   }
 
-  //NESTED LED FUNCTIONS HERE
+  //Calls LED function based on Current state
   if (current_state == 0){
     AllOff();
     
@@ -93,12 +91,13 @@ void loop() {
 }
 
 void AllOff() {
+  //Turns all the LEDS off
   digitalWrite(pinLED1, LOW);
   digitalWrite(pinLED2, LOW);
   digitalWrite(pinLED3, LOW);
 }
 void AllFlashing() {
-  
+  //Checks mills and does a mod to see whether in an odd or even time since last button press. If odd, turns on. If even, turns off.
   
   if ((((millis()-lastDebounceTime)/1000) % 2) == 1  ){
     digitalWrite(pinLED1, HIGH);
@@ -114,12 +113,13 @@ void AllFlashing() {
   
 }
 void AllOn() {
+  //Turns all the LEDs on
   digitalWrite(pinLED1, HIGH);
   digitalWrite(pinLED2, HIGH);
   digitalWrite(pinLED3, HIGH); 
 }
 void BlinkInOrder() {
-  
+  //Checks millis and does a mod to see which led should be on.
   if ((((millis()-lastDebounceTime)/1000) % 3) == 0  ){
     digitalWrite(pinLED1, HIGH);
   }
@@ -143,6 +143,7 @@ void BlinkInOrder() {
     
 }
 void BlinkAlternating() {
+  //Checks millis and doesa  mod. Turns on one LED and then the other two, alternating.
   if ((((millis()-lastDebounceTime)/1000) % 2) == 1  ){
     digitalWrite(pinLED1, HIGH);
     digitalWrite(pinLED2, LOW);
