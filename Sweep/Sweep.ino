@@ -11,7 +11,9 @@ Servo tiltservo;// create servo object to control a servo
  
 int panpos = 0;    // variable to store the servo position 
 int tiltpos = 0;   
-
+int range = 0;
+String pantiltrange = "";
+String index = ";";
  
  
 void setup() 
@@ -21,20 +23,23 @@ void setup()
   tiltservo.attach(3);
   panservo.write(0);
   tiltservo.write(0);
+  
 } 
  
  
 void loop() 
 { 
-  for(panpos = 0; panpos < 180; panpos += 1)  // goes from 0 degrees to 180 degrees 
+  for(panpos = 0; panpos < 180; panpos += 5)  // goes from 0 degrees to 180 degrees 
   {                                  // in steps of 1 degree 
     panservo.write(panpos);              // tell servo to go to position in variable 'pos'
-    delay(50);                       // waits 15ms for the servo to reach the position 
+    delay(150);                       // waits 15ms for the servo to reach the position 
 
-   for(tiltpos = 0; tiltpos<=100; tiltpos+=1)     // goes from 180 degrees to 0 degrees 
+   for(tiltpos = 0; tiltpos<=100; tiltpos+=5)     // goes from 180 degrees to 0 degrees 
    {                                
       tiltservo.write(tiltpos);              // tell servo to go to position in variable 'pos' 
-      delay(50);                       // waits 15ms for the servo to reach the position 
+      delay(150);                       // waits 15ms for the servo to reach the position 
+      range = analogRead(0);
+      Serial.println(String(panpos)+index+String(tiltpos)+index+String(range));
   }  
  }   
 } 
