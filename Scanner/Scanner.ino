@@ -1,9 +1,8 @@
 
-
 #include <Servo.h>  //include servo library
  
 Servo panservo; // create servo objects 
-Servo tiltservo;
+Servo tiltservo; 
                
  
 int panpos = 0;    // variable to store the servo pan position 
@@ -35,10 +34,10 @@ void loop()
      for(tiltpos = 0; tiltpos<=80; tiltpos+= 2)     // goes from 180 degrees to 0 degrees 
      {                                
         tiltservo.write(tiltpos);              // tell servo to go to position in variable 'tiltpos' 
-        delay(300);                       // waits 150 ms for the servo to reach the position 
-        range = analogRead(0);
-        Serial.println(String(panpos)+index+String(tiltpos)+index+String(range));
-        if(panpos == 16 && tiltpos == 80){
+        delay(150);                       // waits 150 ms for the servo to reach the position 
+        range = analogRead(0);   //read distance sensor
+        Serial.println(String(panpos)+index+String(tiltpos)+index+String(range)); //write data to file
+        if(panpos == 16 && tiltpos == 80){ //if done, print end to serial and reset arduino
           Serial.println("end");
           delay(1500);
           resetFunc(); 
