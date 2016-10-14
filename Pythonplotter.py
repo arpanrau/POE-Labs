@@ -29,7 +29,6 @@ except:
 while trigger == True: #ends when the scanner is done
     try:
         casedata = ser.readline()#reads the serial data
-        print casedata #diagnostic, remove
     except:
         print "No Data avaliable"  #handle serial read errors
     else:
